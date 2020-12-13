@@ -21,15 +21,15 @@ class BrightId:
 
         '''
         self.context = context
-        self.api = self.Api(context, testing_key)
+        self.api = self.Api(context)
         self.operation = self.Operation(context, sponser_private)
+        self.test = self.Test(context, testing_key)
         self.sponser_private = sponser_private
         self.testing_key = testing_key
 
     class Api:
-        def __init__(self, context, testing_key) -> None:
+        def __init__(self, context) -> None:
             self.context = context
-            self.testing_key = testing_key
 
         def verifications(self, context_id='', context='', *args, **kwargs) -> dict:
             '''
@@ -58,49 +58,6 @@ class BrightId:
             url = APP_URL + f'/apps/{context or self.context}'
             response = requests.get(url)
             return response.json()
-
-        def deep_link(self, context_id, context='') -> str:
-            '''
-            return link
-            '''
-            _link = f'{APP_URL[:APP_URL.find("/node")]}/link-verification/http:%2f%2f{DEEP_LINK}/{context or self.context}/{context_id}/'
-            return _link
-
-        def qr(self, context_id, context='', dir='', *args, **kwargs):
-            '''
-            create qr code as png file in dir as name context_id.png
-            defualt scale is 8 but you can change it with scale=int
-            '''
-            qr_link = f'brightid://link-verification/http:%2f%2f{NODE_URL}/{context or self.context}/{context_id}'
-            qrCode = pyqrcode.create(qr_link)
-            if dir and not os.path.exists(dir):
-                os.makedirs(dir)
-            qrCode.png(dir+'/'+context_id+'.png',
-                       scale=kwargs.get('scale') or '8')
-
-        def block_user_verification(self, context_id, action, context='', testing_key=''):
-            '''
-            action = ('sponsorship', 'link', 'verification')
-            in bad request return dict that keys will be error:bool, errorNum:int, errorMessage:string, code: int
-            '''
-            url = NODE_URL + \
-                f'/testblocks/{context or self.context}/{action}/{context_id}'
-            params = (
-                ('testingKey', testing_key or self.testing_key),
-            )
-            response = requests.put(url, params=params)
-            return response
-
-        def remove_block_user_verification(self, context_id, action, context='', testing_key=''):
-            '''
-            action = ('sponsorship', 'link', 'verification')
-            in bad request return dict that keys will be error:bool, errorNum:int, errorMessage:string, code: int
-            '''
-            url = NODE_URL + \
-                f'/testblocks/{context or self.context}/{action}/{context_id}'
-            params = (('testingKey', testing_key or self.testing_key),)
-            response = requests.delete(url, params=params)
-            return response
 
     class Operation:
         '''
@@ -134,5 +91,51 @@ class BrightId:
             response = requests.post(URL, json=op)
             return response.json()
 
+    class Test:
+        def __init__(self, context, testing_key):
+            self.context = context
+            self.testing_key = testing_key
 
+        def block_user_verification(self, context_id, action, context='', testing_key=''):
+            '''
+            action = ('sponsorship', 'link', 'verification')
+            in bad request return dict that keys will be error:bool, errorNum:int, errorMessage:string, code: int
+            '''
+            url = NODE_URL + \
+                f'/testblocks/{context or self.context}/{action}/{context_id}'
+            params = (
+                ('testingKey', testing_key or self.testing_key),
+            )
+            response = requests.put(url, params=params)
+            return response
+
+        def remove_block_user_verification(self, context_id, action, context='', testing_key=''):
+            '''
+            action = ('sponsorship', 'link', 'verification')
+            in bad request return dict that keys will be error:bool, errorNum:int, errorMessage:string, code: int
+            '''
+            url = NODE_URL + \
+                f'/testblocks/{context or self.context}/{action}/{context_id}'
+            params = (('testingKey', testing_key or self.testing_key),)
+            response = requests.delete(url, params=params)
+            return response
+
+    def deep_link(self, context_id, context='') -> str:
+        '''
+        return link
+        '''
+        _link = f'{APP_URL[:APP_URL.find("/node")]}/link-verification/http:%2f%2f{DEEP_LINK}/{context or self.context}/{context_id}/'
+        return _link
+
+    def qr(self, context_id, context='', dir='', *args, **kwargs):
+        '''
+        create qr code as png file in dir as name context_id.png
+        defualt scale is 8 but you can change it with scale=int
+        '''
+        qr_link = f'brightid://link-verification/http:%2f%2f{NODE_URL}/{context or self.context}/{context_id}'
+        qrCode = pyqrcode.create(qr_link)
+        if dir and not os.path.exists(dir):
+            os.makedirs(dir)
+        qrCode.png(dir+'/'+context_id+'.png',
+                   scale=kwargs.get('scale') or '8')
 # Dar panah khoda
