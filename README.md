@@ -1,2 +1,2 @@
 # python-brightid
-SDK for integrate with BrightId
+SDK for integrating with BrightId
