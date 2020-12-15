@@ -6,7 +6,6 @@ class Verifications:
         self.node = node
 
     def get(self, app, context_id='', **kwargs):
-        params_key = ('count_only', 'timestamp', 'signed')
         params = (
             ('timestamp', kwargs.get('timestamp')),
             ('signed', kwargs.get('signed')),
