@@ -9,16 +9,14 @@ class Operations:
 
     def post(self, op):
         response = requests.post(
-            f'{self.node.url}/{__version__}/operations', json=op)
+            f'{self.node.url}/operations', json=op)
         res = response.json()
-        if res.get('error'):
-            raise RuntimeError(res.get('errorMessage'))
+        self.node.check_error(res)
         return res.get('data').get('hash')
 
     def get(self, hash):
         response = requests.get(
-            f'{self.node.url}/{__version__}/operations/{hash}')
+            f'{self.node.url}/operations/{hash}')
         res = response.json()
-        if res.get('error'):
-            raise RuntimeError(res.get('errorMessage'))
+        self.node.check_error(res)
         return res.get('data')

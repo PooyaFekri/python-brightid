@@ -9,32 +9,28 @@ class Users:
 
     def get(self, user):
         response = requests.get(
-            f'{self.node.url}/{__version__}/users/{user}')
+            f'{self.node.url}/users/{user}')
         res = response.json()
-        if res.get('error'):
-            raise RuntimeError(res.get('errorMessage'))
+        self.node.check_error(res)
         return res.get('data')
 
     def verifications(self, user):
         response = requests.get(
-            f'{self.node.url}/{__version__}/users/{user}/verifications')
+            f'{self.node.url}/users/{user}/verifications')
         res = response.json()
-        if res.get('error'):
-            raise RuntimeError(res.get('errorMessage'))
+        self.node.check_error(res)
         return res.get('data').get('verifications')
 
     def connections(self, user, direction):
         response = requests.get(
-            f'{self.node.url}/{__version__}/users/{user}/connections/{direction}')
+            f'{self.node.url}/users/{user}/connections/{direction}')
         res = response.json()
-        if res.get('error'):
-            raise RuntimeError(res.get('errorMessage'))
+        self.node.check_error(res)
         return res.get('data').get('connections')
 
     def profile(self, user, requestor):
         response = requests.get(
-            f'{self.node.url}/{__version__}/users/{user}/profile/{requestor}')
+            f'{self.node.url}/users/{user}/profile/{requestor}')
         res = response.json()
-        if res.get('error'):
-            raise RuntimeError(res.get('errorMessage'))
+        self.node.check_error(res)
         return res.get('data')

@@ -12,23 +12,21 @@ class Testblocks:
             ('testingKey', testing_key),
         )
         response = requests.put(
-            f'{self.node.url}/{__version__}/testblocks/{app}/{action}/{context_id}', params=params)
+            f'{self.node.url}/testblocks/{app}/{action}/{context_id}', params=params)
         try:
             res = response.json()
         except:
             return
-        if res.get('error'):
-            raise RuntimeError(res.get('errorMessage'))
+        self.node.check_error(res)
 
     def delete(self, app, action, context_id, testing_key):
         params = (
             ('testingKey', testing_key),
         )
         response = requests.delete(
-            f'{self.node.url}/{__version__}/testblocks/{app}/{action}/{context_id}', params=params)
+            f'{self.node.url}/testblocks/{app}/{action}/{context_id}', params=params)
         try:
             res = response.json()
         except:
             return
-        if res.get('error'):
-            raise RuntimeError(res.get('errorMessage'))
+        self.node.check_error(res)

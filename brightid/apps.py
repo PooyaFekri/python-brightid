@@ -8,8 +8,7 @@ class Apps:
         self.node = node
 
     def get(self, app=''):
-        response = requests.get(f'{self.node.url}/{__version__}/apps/{app}')
+        response = requests.get(f'{self.node.url}/apps/{app}')
         res = response.json()
-        if res.get('error'):
-            raise RuntimeError(res.get('errorMessage'))
+        self.node.check_error(res)
         return res.get('data').get('apps') or res.get('data')

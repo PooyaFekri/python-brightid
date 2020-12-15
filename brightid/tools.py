@@ -4,18 +4,16 @@ import base64
 import pyqrcode
 
 
-def create_deep_link(context, context_id, url='http://node.brightid.org', format='long'):
+def create_deep_link(context, context_id, url='http://node.brightid.org', schema='https'):
     url = url.replace('/', '%2f')
-    if format == 'long':
-        deep_link = f'https://app.brightid.org/link-verification/{url}/{context}/{context_id}/'
-    elif format == 'short':
+    if schema == 'brightid':
         deep_link = f'brightid://link-verification/{url}/{context}/{context_id}'
     else:
-        raise RuntimeError('Wrong format')
+        deep_link = f'https://app.brightid.org/link-verification/{url}/{context}/{context_id}/'
     return deep_link
 
 
-def createQR(deep_link):
+def create_qr(deep_link):
     qr = pyqrcode.create(deep_link)
     return qr.png_as_base64_str()
 
@@ -36,5 +34,6 @@ def create_bright_id():
     id = public.strip('=').replace('/', '_').replace('+', '-')
     return {
         'id': id,
-        'private': private
+        'private': private,
+        'public': public
     }

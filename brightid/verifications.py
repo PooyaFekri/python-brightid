@@ -10,7 +10,7 @@ class Verifications:
     def get(self, app, context_id='', **kwargs):
         params_key = ('count_only', 'timestamp', 'signed')
         params = []
-        url = f'{self.node.url}/{__version__}/verifications/{app}/{context_id}?'
+        url = f'{self.node.url}/verifications/{app}/{context_id}?'
         for i in kwargs:
             if i in params_key:
                 params.append((i, kwargs[i]))
@@ -21,8 +21,7 @@ class Verifications:
             url += f'{i[0]}={i[1]}&'
         response = requests.get(url)
         res = response.json()
-        if res.get('error'):
-            raise RuntimeError(res.get('errorMessage'))
+        self.node.check_error(res)
         if res.get('data').get('count') and kwargs.get('count_only'):
             return res.get('data').get('count')
         return res.get('data')

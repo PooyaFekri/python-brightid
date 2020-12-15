@@ -2,11 +2,9 @@ import requests
 
 from . import users, operations, verifications, testblocks, apps
 
-__version__ = '/brightid/v5'
-
 
 class Node:
-    def __init__(self, url='http://node.brightid.org') -> None:
+    def __init__(self, url='http://node.brightid.org/brightid/v5') -> None:
         self.url = url
         self.users = users.Users(self)
         self.operations = operations.Operations(self)
@@ -14,15 +12,17 @@ class Node:
         self.testblocks = testblocks.Testblocks(self)
         self.apps = apps.Apps(self)
     def ip(self):
-        response = requests.get(f'{self.url}/{__version__}/ip')
+        response = requests.get(f'{self.url}/ip')
         res = response.json()
-        if res.get('error'):
-            raise RuntimeError(res.get('errorMessage'))
+        self.check_error(res)
         return res.get('data').get('ip')
 
     def state(self):
-        response = requests.get(f'{self.url}/{__version__}/state')
+        response = requests.get(f'{self.url}/state')
         res = response.json()
+        self.check_error(res)
+        return res.get('data')
+
+    def check_error(self, res:dict):
         if res.get('error'):
             raise RuntimeError(res.get('errorMessage'))
-        return res.get('data')
