@@ -1,6 +1,6 @@
 from distutils.core import setup
 setup(
-  name = 'python_brightid',
+  name = 'python-brightid',
   packages = ['brightid'],
   version = '1',
   license='MIT',
