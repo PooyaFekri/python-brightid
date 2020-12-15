@@ -1,7 +1,7 @@
 from distutils.core import setup
 setup(
   name = 'python-brightid',
-  packages = ['.' , 'brightid'],
+  packages = ['brightid'],
   version = '1.01',
   license='MIT',
   description = 'SDK for integrating with BrightId!',
