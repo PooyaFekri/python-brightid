@@ -1,10 +1,8 @@
 import requests
 
-__version__ = '/brightid/v5'
-
 
 class Testblocks:
-    def __init__(self, node) -> None:
+    def __init__(self, node):
         self.node = node
 
     def put(self, app, action, context_id, testing_key):
@@ -13,11 +11,9 @@ class Testblocks:
         )
         response = requests.put(
             f'{self.node.url}/testblocks/{app}/{action}/{context_id}', params=params)
-        try:
+        if not response.ok:
             res = response.json()
-        except:
-            return
-        self.node.check_error(res)
+            self.node.check_error(res)
 
     def delete(self, app, action, context_id, testing_key):
         params = (
@@ -25,8 +21,6 @@ class Testblocks:
         )
         response = requests.delete(
             f'{self.node.url}/testblocks/{app}/{action}/{context_id}', params=params)
-        try:
+        if not response.ok:
             res = response.json()
-        except:
-            return
-        self.node.check_error(res)
+            self.node.check_error(res)

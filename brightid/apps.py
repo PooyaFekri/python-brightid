@@ -1,7 +1,5 @@
 import requests
 
-__version__ = '/brightid/v5'
-
 
 class Apps:
     def __init__(self, node):

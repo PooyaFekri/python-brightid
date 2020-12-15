@@ -1,10 +1,8 @@
 import requests
 
-__version__ = '/brightid/v5'
-
 
 class Operations:
-    def __init__(self, node) -> None:
+    def __init__(self, node):
         self.node = node
 
     def post(self, op):

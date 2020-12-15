@@ -4,7 +4,7 @@ from . import users, operations, verifications, testblocks, apps
 
 
 class Node:
-    def __init__(self, url='http://node.brightid.org/brightid/v5') -> None:
+    def __init__(self, url='http://node.brightid.org/brightid/v5'):
         self.url = url
         self.users = users.Users(self)
         self.operations = operations.Operations(self)
@@ -23,6 +23,6 @@ class Node:
         self.check_error(res)
         return res.get('data')
 
-    def check_error(self, res:dict):
+    def check_error(self, res):
         if res.get('error'):
             raise RuntimeError(res.get('errorMessage'))
