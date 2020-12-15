@@ -11,7 +11,7 @@ setup(
   download_url = 'https://github.com/PooyaFekri/python-brightid/archive/main.zip',
   keywords = ['Brightid'],
   install_requires=[
-          'requests=>2.22',
+          'requests>=2.22.0',
           'ed25519>=1.5',
           'pyqrcode>=1.2.1'
       ],
