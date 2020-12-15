@@ -1,2 +1,4 @@
 # Be name khoda
-from .node import Node as Node
+from brightid.brightid.node import Node as Node
+from brightid.brightid import tools as tools
+
