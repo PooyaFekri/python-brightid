@@ -1,6 +1,5 @@
 import requests
 
-
 __version__ = '/brightid/v5'
 
 
