@@ -13,7 +13,8 @@ setup(
   install_requires=[
           'requests',
           'ed25519',
-          'pyqrcode'
+          'pyqrcode',
+          'pypng'
       ],
   classifiers=[  # Optional
     # How mature is this project? Common values are
