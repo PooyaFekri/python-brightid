@@ -11,7 +11,7 @@ class Verifications:
             ('signed', kwargs.get('signed')),
             ('count_only', kwargs.get('count_only'))
         )
-        response = requests.get(self.node.url, params=params)
+        response = requests.get(f'{self.node.url}/verifications/{app}/{context_id}', params=params)
         res = response.json()
         self.node.check_error(res)
         if res.get('data').get('count') and kwargs.get('count_only'):
