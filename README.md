@@ -2,15 +2,11 @@
 
 BrightID SDK for Python
 
-============
-Introduction
-============
+#Introduction
 
 This library provides a Python interface for the [BrightID API](https://dev.brightid.org/docs/node-api/web_services/foxx/node-api-5.6.0.yaml). It's compatible with Python 3 and supports BrightID API 5. In addition to the API implementation, this library provides required tools to make BrightID integration easy and straightforward for app developers[BrightID DEV](dev.brightid.org).
 
-==========
-Installing
-==========
+##Installing
 
 You can install or upgrade python-brightid using:
 
@@ -22,9 +18,7 @@ Or you can install from source with:
     $ cd python-brightid
     $ python3 setup.py install
 
-==========
-Integrating apps
-==========
+##Integrating apps
 
 Apps can use BrightID to make sure their users have no multiple accounts. To verify uniquness of a user, app should:
 
@@ -92,9 +86,8 @@ If exception is raised and `str(e)` is:
 
 5. check its database to ensure none of linked `context_id`s by this user got the service supposed to be provided once for each user before. The response has a list of all `context_ids` the BrightID user linked under this context which can be used by app for this purpose.
 
-==========
-Using API
-==========
+##Using API
+
 See BrightID API documantion in [BrightID API](https://dev.brightid.org/docs/node-api)
 
 #### Connecting to Node
