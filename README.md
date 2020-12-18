@@ -6,7 +6,7 @@ BrightID SDK for Python
 
 This library provides a Python interface for the [BrightID API](https://dev.brightid.org/docs/node-api/web_services/foxx/node-api-5.6.0.yaml). It's compatible with Python 3 and supports BrightID API 5. In addition to the API implementation, this library provides required tools to make BrightID integration easy and straightforward for app developers.
 
-[BrightID DEV](https://dev.brightid.org)
+Visit [dev.brightid.org](https://dev.brightid.og) to find out more developer guides and documents.
 
 ## Installing
 
@@ -26,30 +26,30 @@ Apps can use BrightID to make sure their users have no multiple accounts. To ver
 
 1. Create a unique `context_id` for the user
 ```
-   > > > import uuid
-   > > > context = 'top-up-gifter'
-   > > > context_id = uuid.uuid4().hex
-   > > > context_id
-   > > > 'a9ee5dc6ac114c95af50ef90225e0e53'
+   >>> import uuid
+   >>> context = 'top-up-gifter'
+   >>> context_id = uuid.uuid4().hex
+   >>> context_id
+   >>> 'a9ee5dc6ac114c95af50ef90225e0e53'
 ```
 2. Create a deep link with that `context_id`
 ```
-   > > > url = 'http://node.brightid.org'
-   > > > deep_link = brightid.tools.create_deep_link(context, context_id, url)
-   > > > node = brightid.Node('http://node.brightid.org/brightid/v5')
-   > > > brightid.tools.create_qr(deep_link)
-   > > > 'iVBORw0KGgoAAAANSUhEUgAAAggAAA...dKGIAAAAAElFTkSuQmCC'
+   >>> url = 'http://node.brightid.org'
+   >>> deep_link = brightid.tools.create_deep_link(context, context_id, url)
+   >>> node = brightid.Node('http://node.brightid.org/brightid/v5')
+   >>> brightid.tools.create_qr(deep_link)
+   >>> 'iVBORw0KGgoAAAANSUhEUgAAAggAAA...dKGIAAAAAElFTkSuQmCC'
 ```
 3. Ask the user to click the deep link or scan the QR code representation to link their BrightID to that `context_id`
 
 4. Query BrightID nodes to check if the BrightID that linked the `context_id` is verified.
 ```
-   > > > app = 'top-up-gifter'
-   > > > try:
-   > > > ... v = node.verifications.get(app, context_id)
-   > > > ... except Exception as e:
-   > > > ... print(str(e))
-   > > > ...
+   >>> app = 'top-up-gifter'
+   >>> try:
+   >>> ... v = node.verifications.get(app, context_id)
+   >>> ... except Exception as e:
+   >>> ... print(str(e))
+   >>> ...
 ```
 If exception is raised and `str(e)` is:
 
@@ -88,9 +88,9 @@ If exception is raised and `str(e)` is:
 
 5. check its database to ensure none of linked `context_id`s by this user got the service supposed to be provided once for each user before. The response has a list of all `context_ids` the BrightID user linked under this context which can be used by app for this purpose.
 
-## Using API
+##Using API
 
-See BrightID API documantion in [BrightID API](https://dev.brightid.org/docs/node-api)
+Check [BrightID API documentation](https://dev.brightid.org/docs/node-api) to find more details.
 
 #### Connecting to Node
 ```
