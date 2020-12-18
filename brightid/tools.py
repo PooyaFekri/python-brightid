@@ -14,7 +14,7 @@ def create_deep_link(context, context_id, url='http://node.brightid.org', schema
 
 
 def create_qr(deep_link, scale=8):
-    qr = pyqrcode.create(deep_link,scale=scale)
+    qr = pyqrcode.create(deep_link)
     return qr.png_as_base64_str(scale=scale)
 
 
