@@ -24,36 +24,36 @@ Or you can install from source with:
 
 Apps can use BrightID to make sure their users have no multiple accounts. To verify uniquness of a user, app should:
 
-1. Create a unique `context_id` for the user
+1. Create a unique `contextId` for the user
 ```
    >>> import uuid
    >>> context = 'top-up-gifter'
-   >>> context_id = uuid.uuid4().hex
-   >>> context_id
+   >>> contextId = uuid.uuid4().hex
+   >>> contextId
    >>> 'a9ee5dc6ac114c95af50ef90225e0e53'
 ```
-2. Create a deep link with that `context_id`
+2. Create a deep link with that `contextId`
 ```
    >>> url = 'http://node.brightid.org'
-   >>> deep_link = brightid.tools.create_deep_link(context, context_id, url)
+   >>> deep_link = brightid.tools.create_deep_link(context, contextId, url)
    >>> node = brightid.Node('http://node.brightid.org/brightid/v5')
    >>> brightid.tools.create_qr(deep_link)
    >>> 'iVBORw0KGgoAAAANSUhEUgAAAggAAA...dKGIAAAAAElFTkSuQmCC'
 ```
-3. Ask the user to click the deep link or scan the QR code representation to link their BrightID to that `context_id`
+3. Ask the user to click the deep link or scan the QR code representation to link their BrightID to that `contextId`
 
-4. Query BrightID nodes to check if the BrightID that linked the `context_id` is verified.
+4. Query BrightID nodes to check if the BrightID that linked the `contextId` is verified.
 ```
    >>> app = 'top-up-gifter'
    >>> try:
-   >>> ... v = node.verifications.get(app, context_id)
+   >>> ... v = node.verifications.get(app, contextId)
    >>> ... except Exception as e:
    >>> ... print(str(e))
    >>> ...
 ```
 If exception is raised and `str(e)` is:
 
-- `context_id not found`, it means that user did not link the `context_id` to the BrightID yet. The app should query again after a while in such case.
+- `contextId not found`, it means that user did not link the `contextId` to the BrightID yet. The app should query again after a while in such case.
 
 - `user can not be verified for this app`, it means user is not verified on BrightID yet. The app should ask user to return back after [getting verified](https://brightid.gitbook.io/brightid/getting-verified) on BrightID.
 
@@ -66,7 +66,7 @@ If exception is raised and `str(e)` is:
     >>> op = {
     ...     'name': 'Sponsor',
     ...     'app': app,
-    ...     'context_id': context_id,
+    ...     'contextId': contextId,
     ...     'timestamp': int(time.time()*1000),
     ...     'v': 5
     ... }
@@ -78,17 +78,17 @@ If exception is raised and `str(e)` is:
     'rFT1ASgPQuxUx0XfMq9EjBbuzCOaoOw_sdklaDamPXw'
     >>> time.sleep(10)
     >>> try:
-    ...     v = node.verifications.get(app, context_id)
+    ...     v = node.verifications.get(app, contextId)
     ... except Exception as e:
     ...     print(str(e))
     ...
     >>> v
-    {'unique': True, 'app': 'top-up-gifter', 'context': 'top-up-gifter', 'context_ids': ['a9ee5dc6ac114c95af50ef90225e0e53', '6e85ac7a7a1945d352de5c422db69f72']}
+    {'unique': True, 'app': 'top-up-gifter', 'context': 'top-up-gifter', 'contextIds': ['a9ee5dc6ac114c95af50ef90225e0e53', '6e85ac7a7a1945d352de5c422db69f72']}
 ```
 
-5. check its database to ensure none of linked `context_id`s by this user got the service supposed to be provided once for each user before. The response has a list of all `context_ids` the BrightID user linked under this context which can be used by app for this purpose.
+5. check its database to ensure none of linked `contextId`s by this user got the service supposed to be provided once for each user before. The response has a list of all `contextIds` the BrightID user linked under this context which can be used by app for this purpose.
 
-##Using API
+## Using API
 
 Check [BrightID API documentation](https://dev.brightid.org/docs/node-api) to find more details.
 
@@ -126,26 +126,26 @@ Check [BrightID API documentation](https://dev.brightid.org/docs/node-api) to fi
 #### Getting verifications data
 ```
     >>> node.verifications.get(app)
-    {'count': 68, 'context_ids': ['6847e75f4351f70836c2e6330fb3d8ac', '6e85ac7a7a1945d352de5c422db69f72', ...]}
+    {'count': 68, 'contextIds': ['6847e75f4351f70836c2e6330fb3d8ac', '6e85ac7a7a1945d352de5c422db69f72', ...]}
     >>> node.verifications.get(app, count_only=True)
     68
-    >>> node.verifications.get(app, context_id, singed='eth', timestamp='seconds')
-    {'unique': True, 'app': 'top-up-gifter', 'context': 'top-up-gifter', 'context_ids': ['dc100f7d468b232e65aa5545d718caa3', '386039e2db5916e1375b6227bf900b58'], 'timestamp': 1608282563}
+    >>> node.verifications.get(app, contextId, singed='eth', timestamp='seconds')
+    {'unique': True, 'app': 'top-up-gifter', 'context': 'top-up-gifter', 'contextIds': ['dc100f7d468b232e65aa5545d718caa3', '386039e2db5916e1375b6227bf900b58'], 'timestamp': 1608282563}
 ```
 #### Blocking verification for test
 ```
     >>> action='sponsorship' # sponsorship/link/verification are valid actions
     >>> testing_key='a8...OtD'
-    >>> node.testblocks.put(app, action, context_id, testing_key)
+    >>> node.testblocks.put(app, action, contextId, testing_key)
     >>> try:
-    ...     node.verifications.get(app, context_id, singed='eth', timestamp='seconds')
+    ...     node.verifications.get(app, contextId, singed='eth', timestamp='seconds')
     ... except Exception as e:
     ...     print(str(e))
     ...
     user is not sponsored
-    >>> node.testblocks.delete(app, action, context_id, testing_key)
-    >>> node.verifications.get(app, context_id, singed='eth', timestamp='seconds')
-    {'unique': True, 'app': 'top-up-gifter', 'context': 'top-up-gifter', 'context_ids': ['dc100f7d468b232e65aa5545d718caa3', '386039e2db5916e1375b6227bf900b58'], 'timestamp': 1608282714}
+    >>> node.testblocks.delete(app, action, contextId, testing_key)
+    >>> node.verifications.get(app, contextId, singed='eth', timestamp='seconds')
+    {'unique': True, 'app': 'top-up-gifter', 'context': 'top-up-gifter', 'contextIds': ['dc100f7d468b232e65aa5545d718caa3', '386039e2db5916e1375b6227bf900b58'], 'timestamp': 1608282714}
 ```
 #### Posting operations
 ```
