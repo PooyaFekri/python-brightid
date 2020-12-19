@@ -46,10 +46,11 @@ Apps can use BrightID to make sure their users have no multiple accounts. To ver
 ```
    >>> app = 'top-up-gifter'
    >>> try:
-   >>> ... v = node.verifications.get(app, contextId)
-   >>> ... except Exception as e:
-   >>> ... print(str(e))
-   >>> ...
+   ...     v = node.verifications.get(app, contextId)
+   ... except Exception as e:
+   ...     print(str(e))
+   ...
+   >>>
 ```
 If exception is raised and `str(e)` is:
 
