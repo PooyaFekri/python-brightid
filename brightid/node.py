@@ -1,16 +1,18 @@
 import requests
 
-from . import users, operations, verifications, testblocks, apps
+from . import users, groups, operations, verifications, testblocks, apps
 
 
 class Node:
     def __init__(self, url='http://node.brightid.org/brightid/v5'):
         self.url = url
         self.users = users.Users(self)
+        self.groups = groups.Groups(self)
         self.operations = operations.Operations(self)
         self.verifications = verifications.Verifications(self)
         self.testblocks = testblocks.Testblocks(self)
         self.apps = apps.Apps(self)
+
     def ip(self):
         response = requests.get(f'{self.url}/ip')
         res = response.json()
