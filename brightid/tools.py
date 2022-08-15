@@ -4,12 +4,9 @@ import base64
 import pyqrcode
 
 
-def create_deep_link(context, context_id, url='http://node.brightid.org', schema='https'):
-    url = url.replace('/', '%2f')
-    if schema == 'brightid':
-        deep_link = f'brightid://link-verification/{url}/{context}/{context_id}'
-    else:
-        deep_link = f'https://app.brightid.org/link-verification/{url}/{context}/{context_id}/'
+def create_deep_link(app, app_user_id):
+    url = "http://node.brightid.org".replace('/', '%2f')
+    deep_link = f'brightid://link-verification/{url}/{app}/{app_user_id}'
     return deep_link
 
 

@@ -10,3 +10,4 @@ class Groups:
         res = response.json()
         self.node.check_error(res)
         return res.get('data')
+

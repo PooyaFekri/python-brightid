@@ -1,5 +1,6 @@
 import requests
 
+
 class Users:
     def __init__(self, node):
         self.node = node
@@ -25,7 +26,7 @@ class Users:
         self.node.check_error(res)
         return res.get('data').get('connections')
 
-    def profile(self, user, requestor):
+    def profile(self, user, requestor=""):
         response = requests.get(
             f'{self.node.url}/users/{user}/profile/{requestor}')
         res = response.json()
