@@ -2,13 +2,13 @@ from distutils.core import setup
 setup(
   name = 'python_brightid',
   packages = ['brightid'],
-  version = '1.2.0',
+  version = '2.0.0',
   license='MIT',
   description = 'SDK for integrating with BrightId!',
-  author = 'Pooya Fekri',
-  author_email = 'pooyafekri79@gmail.com',
-  url = 'https://github.com/PooyaFekri/python-brightid',
-  download_url = 'https://github.com/PooyaFekri/python-brightid/archive/main.zip',
+  author = 'Pooya Fekri, Victor Ginelli (@youngkidwarrior)',
+  author_email = 'pooyafekri79@gmail.com, victor@she.energy',
+  url = 'https://github.com/BrightID/python-brightid',
+  download_url = 'https://github.com/BrightID/python-brightid/archive/main.zip',
   keywords = ['Brightid'],
   install_requires=[
           'requests',
@@ -19,7 +19,7 @@ setup(
   classifiers=[  # Optional
     # How mature is this project? Common values are
     #   3 - Alpha
-    #   4 - Beta
+    #   4 - Beta``
     #   5 - Production/Stable
     'Development Status :: 4 - Beta',
 

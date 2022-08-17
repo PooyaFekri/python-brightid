@@ -10,3 +10,9 @@ class Apps:
         res = response.json()
         self.node.check_error(res)
         return res.get('data').get('apps') or res.get('data')
+
+    def unusedSponsorships(self, app=''):
+        response = requests.get(f'{self.node.url}/apps/{app}')
+        res = response.json()
+        self.node.check_error(res)
+        return res.get('data').get('apps').get('unusedSponsorships')
